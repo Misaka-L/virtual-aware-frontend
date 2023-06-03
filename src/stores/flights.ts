@@ -1,4 +1,4 @@
-import type Flight from "@/types/Flight";
+import type Flight from "../types/Flight";
 import { defineStore } from "pinia";
 
 export const useFlightsStore = defineStore("flights", {

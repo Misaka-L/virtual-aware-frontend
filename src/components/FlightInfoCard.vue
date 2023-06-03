@@ -13,7 +13,7 @@
         <v-col cols="1">
           <v-icon icon="$airplane" size="x-large" />
         </v-col>
-        <v-col>
+        <v-col cols="11">
           <div style="margin-left: 1.2rem">
             <v-row>
               <p class="text-caption text-medium-emphasis">
@@ -31,12 +31,10 @@
             </v-row>
           </div>
         </v-col>
-      </v-row>
-      <v-row>
         <v-col cols="1">
           <v-icon icon="$altimeter" size="x-large" />
         </v-col>
-        <v-col>
+        <v-col cols="11">
           <div style="margin-left: 0.5rem">
             <v-row no-gutters>
               <v-col>
@@ -61,12 +59,10 @@
             </v-row>
           </div>
         </v-col>
-      </v-row>
-      <v-row>
         <v-col cols="1">
           <v-icon icon="$speedometerSlow" size="x-large" />
         </v-col>
-        <v-col>
+        <v-col cols="11">
           <div style="margin-left: 0.5rem">
             <v-row no-gutters>
               <v-col>
@@ -96,12 +92,10 @@
             </v-row>
           </div>
         </v-col>
-      </v-row>
-      <v-row>
         <v-col cols="1">
           <v-icon icon="$spaceStation" size="x-large" />
         </v-col>
-        <v-col>
+        <v-col cols="11">
           <div style="margin-left: 0.5rem">
             <v-row no-gutters>
               <v-col>
@@ -147,18 +141,12 @@
   </v-card>
 </template>
 
-<script lang="ts">
-import type Flight from "@/types/Flight";
-import { defineComponent, type PropType } from "vue";
+<script lang="ts" setup>
+import type Flight from '../types/Flight';
 
-export default defineComponent({
-  props: {
-    flight: {
-      type: Object as PropType<Flight>,
-      required: true,
-    },
-  },
-});
+defineProps<{
+  flight: Flight
+}>();
 </script>
 
 <style>

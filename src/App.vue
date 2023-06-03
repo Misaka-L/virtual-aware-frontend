@@ -2,22 +2,16 @@
   <v-app>
     <v-system-bar window>
       <v-icon icon="mdi-radar" class="me-2" />
-      <span>VRChat Flight Radar</span>
+      <span>VirtualAware</span>
       <v-spacer />
-      <TrackingStatue/>
-      
+      <TrackingStatue />
+
     </v-system-bar>
     <v-navigation-drawer rail expand-on-hover>
+
       <v-list density="compact" nav>
-        <v-list-item
-          v-for="item in navigationItems"
-          :key="item.value"
-          :title="item.title"
-          :value="item.value"
-          :prepend-icon="item.icon"
-          @click="selectedItemValue = item.value"
-          nav
-        />
+        <v-list-item v-for="item in navigationItems" :key="item.value" :title="item.title" :to="item.value"
+          :prepend-icon="item.icon" nav />
       </v-list>
     </v-navigation-drawer>
     <v-main>
@@ -26,41 +20,26 @@
   </v-app>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { RouterView } from "vue-router";
-import { defineComponent } from "vue";
+import { ref } from "vue";
 import TrackingStatue from './components/TrackingStatue.vue';
 
-export default defineComponent({
-  data() {
-    return {
-      selectedItemValue: '',
-      navigationItems: [
-        {
-          title: "Radar",
-          value: "/",
-          icon: "$radar",
-        },
-        {
-          title: "Analytics",
-          value: "/analytics",
-          icon: "$poll",
-        },
-        {
-          title: "Event",
-          value: "/event",
-          icon: "$calendar",
-        },
-      ],
-    };
+const navigationItems = ref([
+  {
+    title: "Radar",
+    value: "/",
+    icon: "$radar",
   },
-  components: {
-    TrackingStatue
+  {
+    title: "Analytics",
+    value: "/analytics",
+    icon: "$poll",
   },
-  watch: {
-    selectedItemValue(newValue, oldValue) {
-      if (newValue != oldValue) this.$router.push(newValue);
-    }
+  {
+    title: "Event",
+    value: "/event",
+    icon: "$calendar",
   },
-});
+]);
 </script>

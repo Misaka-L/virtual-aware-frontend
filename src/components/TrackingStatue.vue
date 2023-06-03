@@ -7,44 +7,34 @@
   <v-badge :content="currentZuluTime" inline />
 </template>
 
-<script lang="ts">
-import { useFlightsStore } from "@/stores/flights";
-import { mapStores } from "pinia";
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { useFlightsStore } from "../stores/flights";
+import { Ref } from "vue";
+import { onMounted } from "vue";
+import { ref } from "vue";
 
-export default defineComponent({
-  data() {
-    return {
-      currentDate: new Date(),
-      currentZuluTime: "",
-      dateUpdateInterval: 0,
-    };
-  },
-  mounted() {
-    this.updateDate();
-    this.dateUpdateInterval = setInterval(this.updateDate, 1000);
-  },
-  beforeUnmount() {
-    clearInterval(this.dateUpdateInterval);
-  },
-  methods: {
-    updateDate() {
-      this.currentDate = new Date();
-      this.currentZuluTime = this.getZuluTime();
-    },
-    getZuluTime(): string {
-      return `${this.currentDate.getUTCFullYear()}-${
-        this.currentDate.getUTCMonth() + 1
-      }-${
-        this.currentDate.getUTCDate() + 1
-      }T${this.currentDate.getUTCHours()}:${this.currentDate.getUTCMinutes()}:${this.currentDate
-        .getUTCSeconds()
-        .toString()
-        .padStart(2, "0")}z`;
-    },
-  },
-  computed: {
-    ...mapStores(useFlightsStore),
-  },
+const currentDate = ref(new Date());
+const currentZuluTime = ref("");
+const dateUpdateInterval: Ref<any> = ref(undefined);
+
+const flightsStore = useFlightsStore();
+
+onMounted(() => {
+  updateDate();
+  dateUpdateInterval.value = setInterval(updateDate, 1000)
 });
+
+function updateDate() {
+  currentDate.value = new Date();
+  currentZuluTime.value = getZuluTime();
+}
+
+function getZuluTime(): string {
+  return `${currentDate.value.getUTCFullYear()}-${currentDate.value.getUTCMonth() + 1
+    }-${currentDate.value.getUTCDate() + 1
+    }T${currentDate.value.getUTCHours()}:${currentDate.value.getUTCMinutes()}:${currentDate
+      .value.getUTCSeconds()
+      .toString()
+      .padStart(2, "0")}z`;
+}
 </script>

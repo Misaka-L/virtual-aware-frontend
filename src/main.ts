@@ -1,4 +1,4 @@
-import { createSSRApp } from "vue";
+import { createApp } from "vue";
 import { createPinia } from "pinia";
 
 import App from "./App.vue";
@@ -19,7 +19,6 @@ import {
 } from "@mdi/js";
 
 const vuetify = createVuetify({
-  ssr: true,
   theme: {
     defaultTheme: "dark",
   },
@@ -41,7 +40,7 @@ const vuetify = createVuetify({
   },
 });
 
-const app = createSSRApp(App);
+const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
