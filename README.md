@@ -1,6 +1,6 @@
-# VRChat Flight Radar Frontend
+# VirtualAware Frontend
 
-The frontend of [VRChatFlightRadar](https://github.com/Misaka-L/VRCFlightRadar)
+The flight radar frontend of [VirtualAware.BackEnd](https://github.com/Misaka-L/VirtualAware.BackEnd)
 
 ## Recommended IDE Setup
 
