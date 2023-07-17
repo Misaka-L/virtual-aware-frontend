@@ -11,7 +11,7 @@
     <v-card-text>
       <v-row>
         <v-col cols="1">
-          <v-icon icon="$airplane" size="x-large" />
+          <v-icon icon="mdi-airplane" size="x-large" />
         </v-col>
         <v-col cols="11">
           <div style="margin-left: 1.2rem">
@@ -32,7 +32,7 @@
           </div>
         </v-col>
         <v-col cols="1">
-          <v-icon icon="$altimeter" size="x-large" />
+          <v-icon icon="mdi-altimeter" size="x-large" />
         </v-col>
         <v-col cols="11">
           <div style="margin-left: 0.5rem">
@@ -60,7 +60,7 @@
           </div>
         </v-col>
         <v-col cols="1">
-          <v-icon icon="$speedometerSlow" size="x-large" />
+          <v-icon icon="mdi-speedometerSlow" size="x-large" />
         </v-col>
         <v-col cols="11">
           <div style="margin-left: 0.5rem">
@@ -93,7 +93,7 @@
           </div>
         </v-col>
         <v-col cols="1">
-          <v-icon icon="$spaceStation" size="x-large" />
+          <v-icon icon="mdi-spaceStation" size="x-large" />
         </v-col>
         <v-col cols="11">
           <div style="margin-left: 0.5rem">
@@ -151,8 +151,9 @@ defineProps<{
 
 <style>
 .flight-info-card {
-  height: 90vh;
-  overflow: overlay !important;
+  height: 80vh;
+  max-height: 780px;
+  overflow: auto !important;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }

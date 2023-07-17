@@ -1,5 +1,6 @@
 <template>
   <div class="flight-info">
+    <v-btn @click="flightsStore.reset" prepend-icon="mdi-arrow-left" class="mb-3" rounded="xl">Back</v-btn>
     <FlightInfoCard :flight="selectedFlight" v-if="selectedFlight != null" />
     <v-expansion-panels v-if="selectedFlight == null">
       <v-expansion-panel title="Flights">
@@ -11,9 +12,6 @@
           </v-list>
         </v-expansion-panel-text>
       </v-expansion-panel>
-      <v-expansion-panel title="Title"
-        text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima">
-      </v-expansion-panel>
     </v-expansion-panels>
   </div>
   <l-map @click="onMapClick" @move="onMapMove" :min-zoom="minZoom" :max-zoom="maxZoom" v-model:zoom="zoom"
@@ -22,16 +20,16 @@
       prefix="Map Data © <a href='https://yuxiaviation.com/'>VRChat Aerospace University</a> | VRChatFlightRadar | Powered by <a href='https://leafletjs.com/'>Leaflet</a>" />
     <l-control-zoom position="bottomright" zoom-in-text="+" zoom-out-text="-" />
     <l-image-overlay url="/VAU.jpg" :bounds="[
-        [-2160, -3480],
-        [2160, 3480],
-      ]" />
+      [-2160, -3480],
+      [2160, 3480],
+    ]" />
     <l-marker v-for="flight in flightsStore.flights" :lat-lng="[flight.latitude, flight.longitude]" :key="flight.id"
       @click="selectedFlightId = flight.id">
       <l-icon>
         <div style="display: flex" :class="{ 'selected-flight': selectedFlightId == flight.id }">
-          <v-icon icon="$airplane" :color="selectedFlightId == flight.id
-              ? 'yellow-darken-4'
-              : 'blue-darken-2'
+          <v-icon icon="mdi-airplane" :color="selectedFlightId == flight.id
+            ? 'yellow-darken-4'
+            : 'blue-darken-2'
             " size="x-large" class="flight-marker-icon"
             :style="'transform: rotate(' + (flight.heading - 45) + 'deg)'" />
           <div class="flight-tag">
@@ -57,8 +55,10 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 import { CRS } from "leaflet/dist/leaflet-src.esm";
 import { ref } from "vue";
-import { onMounted, onBeforeUnmount, computed, Ref } from "vue";
+import { computed } from "vue";
 import Flight from "../types/Flight";
+import { onMounted } from "vue";
+import { onUnmounted } from "vue";
 
 const zoom = ref(-2);
 const minZoom = ref(-5);
@@ -67,28 +67,8 @@ const crs = ref(CRS.Simple);
 const selectedFlightId = ref("");
 const isMapMove = ref(false);
 
-const timer: Ref<any> = ref(0);
-
 const flightsStore = useFlightsStore();
 const selectedFlight = computed(() => flightsStore.flights.find((flight: Flight) => flight.id == selectedFlightId.value));
-
-onMounted(() => startUpdate());
-onBeforeUnmount(() => {
-  clearInterval(timer.value);
-  flightsStore.tracking = false;
-})
-
-function startUpdate() {
-  flightsStore.tracking = true;
-  timer.value = setTimeout(async () => {
-    try {
-      var response = await fetch("/api/flightradar/list");
-      flightsStore.flights = await response.json();
-    } catch { }
-
-    startUpdate();
-  }, 2000);
-}
 
 function onMapClick() {
   if (!isMapMove) selectedFlightId.value = "";
@@ -98,6 +78,9 @@ function onMapClick() {
 function onMapMove() {
   isMapMove.value = true;
 }
+
+onMounted(() => flightsStore.startUpdate())
+onUnmounted(() => flightsStore.stopUpdate())
 </script>
 
 <style lang="scss">

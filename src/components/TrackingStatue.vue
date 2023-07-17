@@ -2,8 +2,6 @@
   <span v-if="!flightsStore.tracking">Tracking paused</span>
   <span v-if="flightsStore.tracking">Currently tracking</span>
   <v-badge v-if="flightsStore.tracking" :content="flightsStore.flights.length + ' flights'" inline />
-  <v-badge v-if="flightsStore.tracking" content="1 instances" inline />
-  <v-badge v-if="flightsStore.tracking" content="1 worlds" inline />
   <v-badge :content="currentZuluTime" inline />
 </template>
 
