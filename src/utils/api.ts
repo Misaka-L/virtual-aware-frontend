@@ -12,10 +12,12 @@ export async function getFlights(instanceId: string, worldId: string) {
 
 export async function getInstances(worldId: string) {
   return (await (
-    await fetch(`/api/flightradar/instances?worldId=${worldId}`)
+    await fetch(`${baseUrl}/flightradar/instances?worldId=${worldId}`)
   ).json()) as string[]
 }
 
 export async function getWorlds() {
-  return (await (await fetch("/api/flightradar/worlds")).json()) as string[]
+  return (await (
+    await fetch(`${baseUrl}/flightradar/worlds`)
+  ).json()) as string[]
 }
