@@ -58,7 +58,7 @@ import { ref } from "vue";
 import { computed } from "vue";
 import Flight from "../types/Flight";
 import { onMounted } from "vue";
-import { onUnmounted } from "vue";
+import { onBeforeUnmount } from "vue";
 
 const zoom = ref(-2);
 const minZoom = ref(-5);
@@ -80,7 +80,7 @@ function onMapMove() {
 }
 
 onMounted(() => flightsStore.startUpdate())
-onUnmounted(() => flightsStore.stopUpdate())
+onBeforeUnmount(() => flightsStore.stopUpdate())
 </script>
 
 <style lang="scss">
