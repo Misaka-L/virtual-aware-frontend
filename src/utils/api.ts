@@ -1,6 +1,6 @@
 import type Flight from "../types/Flight"
 
-const baseUrl = "/api"
+const baseUrl = "https://cdnapi.misakal.xyz/virtualaware"
 
 export async function getFlights(instanceId: string, worldId: string) {
   var flightResponse = await fetch(
